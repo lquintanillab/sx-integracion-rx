@@ -18,7 +18,7 @@ class ExportadorClientesCreJob {
 
 
         try{
-            exportadorDeClientesCredito.exportar()
+          //  exportadorDeClientesCredito.exportar()
         }catch(Exception e){
                 e.printStackTrace()
         }

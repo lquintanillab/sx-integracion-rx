@@ -17,7 +17,7 @@ class DataSourceLocatorService {
 
           def driverManagerDs=new DriverManagerDataSource()
           driverManagerDs.driverClassName="com.mysql.jdbc.Driver"
-          driverManagerDs.url=serverDs.urlAlternativa
+          driverManagerDs.url=serverDs.url
           driverManagerDs.username=serverDs.username
           driverManagerDs.password=serverDs.password
 

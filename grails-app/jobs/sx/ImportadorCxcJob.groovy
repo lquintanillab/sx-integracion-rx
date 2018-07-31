@@ -17,7 +17,7 @@ class ImportadorDeCxcJob {
       println "************************************************************"
 
       try{
-        importadorDeCxc.importarOperacionesVenta()
+        //importadorDeCxc.importarOperacionesVenta()
       }catch(Exception e){
         e.printStackTrace()
       }

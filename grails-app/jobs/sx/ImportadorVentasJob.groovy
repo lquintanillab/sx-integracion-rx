@@ -16,7 +16,7 @@ class ImportadorVentasJob {
       println "************************************************************"
 
       try{
-        importadorDeVentas.importar()
+       // importadorDeVentas.importar()
       }catch(Exception e){
         e.printStackTrace()
       }

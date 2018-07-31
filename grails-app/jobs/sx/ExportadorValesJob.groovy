@@ -17,7 +17,7 @@ class ExportadorValesJob {
 
 
         try{
-            exportadorDeVales.exportar()
+          //  exportadorDeVales.exportar()
         }catch(Exception e){
                 e.printStackTrace()
         }

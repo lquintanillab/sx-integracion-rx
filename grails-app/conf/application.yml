@@ -98,7 +98,7 @@ environments:
     development:
        dataSource:
          dbCreate: none
-         url: jdbc:mysql://papel.dyndns-remote.com:3306/siipapx?autoReconnect=false
+         url: jdbc:mysql://10.10.1.229:3306/siipapx?autoReconnect=true
          password: sys
          properties:
            maxActive: 20

@@ -15,7 +15,7 @@ class ImportadorDeCancelacionesJob {
       println "************************************************************"
 
       try{
-        importadorDeCancelaciones.importar()
+       // importadorDeCancelaciones.importar()
       }catch(Exception e){
         e.printStackTrace()
       }

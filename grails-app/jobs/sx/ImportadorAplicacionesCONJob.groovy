@@ -17,7 +17,7 @@ class ImportadorAplicacionesCONJob {
 
 
       try {
-          importadorDeAplicacionesCON.importar()
+        //  importadorDeAplicacionesCON.importar()
       }catch (Exception e){
           e.printStackTrace()
       }

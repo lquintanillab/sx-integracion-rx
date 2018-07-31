@@ -16,7 +16,9 @@ class ImportadorDepositosJob {
         println "************************************************************"
     try {
           importadorDeDepositos.importar()
+          println "Se importaron con exito los depositos ${new Date()}!!!"
     }catch (Exception e){
+        println "Hubo un error al importar los despositos!!!"
           e.printStackTrace()
     }
     }

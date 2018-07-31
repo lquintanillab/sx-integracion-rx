@@ -17,7 +17,7 @@ class ExportadorTrasladosJob {
 
 
         try{
-            exportadorDeTraslados.exportar()
+           // exportadorDeTraslados.exportar()
         }catch(Exception e){
                 e.printStackTrace()
         }

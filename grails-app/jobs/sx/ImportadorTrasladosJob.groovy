@@ -17,7 +17,7 @@ class ImportadorTrasladosJob {
 
 
       try {
-          importadorDeTraslados.importar()
+         // importadorDeTraslados.importar()
       }catch (Exception e){
           e.printStackTrace()
       }

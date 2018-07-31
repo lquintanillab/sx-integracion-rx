@@ -17,7 +17,7 @@ class ImportadorDeAplicacionesCODJob {
 
 
       try {
-          importadorDeAplicacionesCOD.importar()
+         // importadorDeAplicacionesCOD.importar()
       }catch (Exception e){
           e.printStackTrace()
       }

@@ -16,14 +16,14 @@ class AjusteReplicaJob {
 
 
       try {
-          sincronizacionService.replicaClientesCredito()
+        //  sincronizacionService.replicaClientesCredito()
       }catch (Exception e){
           e.printStackTrace()
       }
 
       try {
 
-         sincronizacionService.depuraReplicaOficinas()
+        // sincronizacionService.depuraReplicaOficinas()
       }catch (Exception e){
           e.printStackTrace()
       }

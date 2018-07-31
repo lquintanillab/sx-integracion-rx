@@ -21,11 +21,14 @@ println "************************************************************"
 
         try{
             importadorDeClientes.importar()
+            println "Se importaron con exito los clientes ${new Date()}!!!"
+
         }catch(Exception e){
             e.printStackTrace()
         } 
         try{
             exportadorDeClientes.exportar()
+            println "Se exportaron con exito los clientes ${new Date()}!!!"
         }catch(Exception e){
               e.printStackTrace()
         } 

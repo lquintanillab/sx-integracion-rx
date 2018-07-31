@@ -18,7 +18,7 @@ class ImportadorCobrosJob {
 
 
       try {
-          importadorDeCobros.importar()
+         // importadorDeCobros.importar()
       }catch (Exception e){
           e.printStackTrace()
       }

@@ -16,7 +16,7 @@ class ExportadorProductosJob {
 
 
       try {
-          exportadorDeProductos.exportar()
+         // exportadorDeProductos.exportar()
       }catch (Exception e){
           e.printStackTrace()
       }

@@ -17,7 +17,7 @@ class ImportadorVentasCreditoJob {
       println "************************************************************"
 
       try{
-        importadorDeVentasCredito.importar()
+      //  importadorDeVentasCredito.importar()
       }catch(Exception e){
         e.printStackTrace()
       }

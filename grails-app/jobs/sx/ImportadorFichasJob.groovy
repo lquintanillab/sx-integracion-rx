@@ -17,7 +17,7 @@ class ImportadorFichasJob {
 
 
       try {
-          importadorDeFichas.importar()
+         // importadorDeFichas.importar()
       }catch (Exception e){
           e.printStackTrace()
       }

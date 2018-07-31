@@ -22,19 +22,19 @@ def importadorDeVales
 
        try{
     //      println "importando Vales: "+sucursal
-          importadorDeVales.importarSucursal(sucursal)
+         // importadorDeVales.importarSucursal(sucursal)
        }catch (Exception e){
               e.printStackTrace()
       }
       try{
       //   println "importando Traslados: "+sucursal
-         importadorDeTraslados.importarSucursal(sucursal)
+        // importadorDeTraslados.importarSucursal(sucursal)
       }catch (Exception e){
              e.printStackTrace()
      }
      try{
       //  println "******************************importando Embarques********************************** "+sucursal
-      replicaService.importarServer(sucursal)
+     // replicaService.importarServer(sucursal)
      }catch (Exception e){
             e.printStackTrace()
     }

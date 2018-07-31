@@ -16,12 +16,12 @@ class ActualizadorJob {
 
 
         try{
-            actualizacionCredito.actualizarSaldo()
+          //  actualizacionCredito.actualizarSaldo()
         }catch(Exception e){
           e.printStackTrace()
         }
         try{
-            actualizacionCredito.actualizarAtraso()
+          //  actualizacionCredito.actualizarAtraso()
         }catch(Exception e){
           e.printStackTrace()
         }
