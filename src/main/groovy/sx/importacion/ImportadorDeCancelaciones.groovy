@@ -29,7 +29,7 @@ class ImportadorDeCancelaciones{
   }
 
   def importar(fecha){
-  //  println ("Importando Cancelaciones del : ${fecha.format('dd/MM/yyyy')}" )
+    println ("Importando Cancelaciones del : ${fecha.format('dd/MM/yyyy')}" )
 
     def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
 
@@ -37,7 +37,7 @@ class ImportadorDeCancelaciones{
 
       servers.each(){server ->
 
-      //  println "***  Importando de Por ReplicaService: ${server.server} ******* ${server.url}****  "
+        println "***  Importando Cancelaciones: ${server.server} ******* ${server.url}****  "
         importarServerFecha(server,fecha)
       }
   }
@@ -58,7 +58,7 @@ class ImportadorDeCancelaciones{
 
     def fecha=fechaImpo.format('yyyy/MM/dd')
 
-    println "Importando Por Server Fecha   "+server.server +" --  "+fecha+ "   "+server.server
+    println "//////////////////////////////////////////////////////////////////////Importando Por Server Fecha   "+server.server +" --  "+fecha+ "   "+server.server
     def dataSourceSuc=dataSourceLocatorService.dataSourceLocatorServer(server)
     def sqlSuc=new Sql(dataSourceSuc)
     def sqlCen=new Sql(dataSource)
@@ -67,18 +67,33 @@ class ImportadorDeCancelaciones{
     def queryCancelacionSuc="select * from cfdi_cancelado where date(date_created)=?"
     //def queryCancelacionSuc="select * from cfdi_cancelado where date(date_created)='2018/04/10'"
 
-    def cancelacionesSuc=sqlSuc.rows(queryCancelacionSuc,[fechaImpo])
+    def cancelacionesSuc=sqlSuc.rows(queryCancelacionSuc,[fecha])
     //def cancelacionesSuc=sqlSuc.rows(queryCancelacionSuc)
 
     cancelacionesSuc.each{cancelacion ->
-      //  println "-- "+cancelacion.id
+        println "-Cancelacionoooooooooo- "+cancelacion.id
           def queryCancelacionCen="select * from cfdi_cancelado where id=? "
 
           def cancelacionCen=sqlCen.firstRow(queryCancelacionCen,[cancelacion.id])
 
+           def configCfdi= EntityConfiguration.findByName("Cfdi")
+
+           def cfdiCen=sqlCen.firstRow("select * from cfdi where uuid=?",[cancelacion.uuid])
+
+          
+          if(cfdiCen){
+
+                println "UUID encontrado para cancelar"+cfdiCen.id
+
+                  def cfdiSuc=sqlSuc.firstRow("select * from cfdi where uuid=?",[cancelacion.uuid])
+                  println "UUID "+cfdiSuc.id
+                  sqlCen.executeUpdate(cfdiSuc, configCfdi.updateSql)
+
+          }
+
           if(!cancelacionCen){
 
-        //    println "Importando Cancelacion de Cfdi"+cancelacion.uuid
+            println "Importando Cancelacion de Cfdi"+cancelacion.uuid
             SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSource).withTableName("cfdi_cancelado")
             def res=insert.execute(cancelacion)
 
@@ -146,7 +161,7 @@ class ImportadorDeCancelaciones{
                   if(cobro){
                     if(cobro.forma_de_pago == 'EFECTIVO' || cobro.forma_de_pago == 'TARJETA_CREDITO' || cobro.forma_de_pago == 'TARJETA_DEBITO' || cobro.forma_de_pago == 'CHEQUE' || cobro.forma_de_pago == 'PAGO_DIF' ){
                       def aplicacionesCobro=sql.rows("select * from aplicacion_de_cobro where cobro_id=?",[cobro.id])
-                      if(aplicacion_de_cobro.size() == 1¿0){
+                      if(aplicacion_de_cobro.size() == 0){
                         sqlCen.execute("delete from cobro where id=?",[cobro.id])
                       }
                     }
