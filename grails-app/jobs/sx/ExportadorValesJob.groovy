@@ -17,7 +17,9 @@ class ExportadorValesJob {
 
 
         try{
-          //  exportadorDeVales.exportar()
+          println "Se inicio la exportacion de los vales ${new Date()}"
+            exportadorDeVales.exportar()
+          println "Se exportaron los vales con exito ${new Date()}  !!!"
         }catch(Exception e){
                 e.printStackTrace()
         }

@@ -17,7 +17,9 @@ class ImportadorDeAplicacionesCODJob {
 
 
       try {
-         // importadorDeAplicacionesCOD.importar()
+         println "Se inicio la importacion de aplicaciones de COD "
+          importadorDeAplicacionesCOD.importar()
+          println "Se importaron las aplicaciones de COd con exito new ${new Date()} !!!"
       }catch (Exception e){
           e.printStackTrace()
       }

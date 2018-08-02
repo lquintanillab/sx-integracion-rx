@@ -18,7 +18,8 @@ class ExportadorClientesCreJob {
 
 
         try{
-          //  exportadorDeClientesCredito.exportar()
+            exportadorDeClientesCredito.exportar()
+            println "Se replicaron los clientes de credito con exito ${new Date()}!!! "
         }catch(Exception e){
                 e.printStackTrace()
         }

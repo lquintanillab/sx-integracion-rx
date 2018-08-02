@@ -118,14 +118,14 @@ class ImportadorDeCancelaciones{
                   def inventarioID=ventaDet.inventario_id
 
                   def queryDet="select * from venta_det where id=?"
-                  def detSUC=sqlSuc.firstRow(queryDet,[ventaDet.id]);
+                  def detSuc=sqlSuc.firstRow(queryDet,[ventaDet.id]);
 
                   def configDetSuc=EntityConfiguration.findByName("VentaDet")
                   sqlCen.executeUpdate(detSuc,configDetSuc.updateSql)
 
                   def queryinventario="select * from inventario where id=?"
 
-                  def inventario =sqlCen.firstRow(queryInventario,[inventarioId])
+                  def inventario =sqlCen.firstRow(queryInventario,[inventarioID])
 
                   if(inventario){
                       sqlCen.execute("Delete from inventario where id=?",inventarioID)
@@ -141,8 +141,18 @@ class ImportadorDeCancelaciones{
 
               aplicacionesCen.each{ aplicacionCen ->
                   def cobroId=aplicacionCen.cobro_id
-                  sqlCen.execute("delete * from aplicacion_de_cobro where cobro_id=?",[cobroId]);
-                  sqlCen.execute("delete * from cobro where id=?",[cobroId])
+                  sqlCen.execute("delete from aplicacion_de_cobro where id=?",[aplicacionCen.id]);
+                  def cobro=sqlCen.firstRow(queryCobro,[cobroId])
+                  if(cobro){
+                    if(cobro.forma_de_pago == 'EFECTIVO' || cobro.forma_de_pago == 'TARJETA_CREDITO' || cobro.forma_de_pago == 'TARJETA_DEBITO' || cobro.forma_de_pago == 'CHEQUE' || cobro.forma_de_pago == 'PAGO_DIF' ){
+                      def aplicacionesCobro=sql.rows("select * from aplicacion_de_cobro where cobro_id=?",[cobro.id])
+                      if(aplicacion_de_cobro.size() == 1¿0){
+                        sqlCen.execute("delete from cobro where id=?",[cobro.id])
+                      }
+                    }
+                      
+                  }
+                  
 
               }
 

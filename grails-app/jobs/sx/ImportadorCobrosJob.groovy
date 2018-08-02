@@ -18,7 +18,9 @@ class ImportadorCobrosJob {
 
 
       try {
-         // importadorDeCobros.importar()
+          println "Se ha iniciado la importacion de Cobros ${new Date()}"
+          importadorDeCobros.importar()
+          println "Se importaron los cobros con exito ${new Date()} !!!"
       }catch (Exception e){
           e.printStackTrace()
       }

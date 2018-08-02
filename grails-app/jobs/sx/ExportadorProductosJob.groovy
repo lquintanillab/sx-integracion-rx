@@ -16,7 +16,10 @@ class ExportadorProductosJob {
 
 
       try {
-         // exportadorDeProductos.exportar()
+          println "Exportando los productos ${new Date()} !!!"
+          exportadorDeProductos.exportar()
+          println "Se exportaron los productos con exito ${new Date()}  !!!"
+        
       }catch (Exception e){
           e.printStackTrace()
       }

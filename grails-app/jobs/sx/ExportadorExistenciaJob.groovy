@@ -16,7 +16,8 @@ class ExportadorExistenciaJob {
         println "************************************************************"
 
         try{
-          //  exportadorDeExistencia.exportar()
+              exportadorDeExistencia.exportar()
+              println "Existencias exportadas con exito !!!"
         }catch(Exception e){
             e.printStackTrace()
         }

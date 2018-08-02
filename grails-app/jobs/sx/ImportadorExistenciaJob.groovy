@@ -17,7 +17,8 @@ class ImportadorExistenciaJob {
 
     
     try{
-           // importadorDeExistencia.importar()
+            importadorDeExistencia.importar()
+             println "Existencias importadas con exito !!!"
         }catch(Exception e){
             e.printStackTrace()
         }
