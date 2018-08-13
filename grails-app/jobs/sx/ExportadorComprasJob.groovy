@@ -1,25 +1,26 @@
 package sx
 
-class ImportadorTrasladosJob {
+class ExportadorComprasJob {
 
-    def importadorDeTraslados
+    def exportadorDeCompras
 
     static triggers = {
-      cron name:   'impTraslados',   startDelay: 20000, cronExpression: '0 0/15 * * * ?'
+       cron name:   'expComp',   startDelay: 20000, cronExpression: '0 0/5 * * * ?'
     }
 
     def execute() {
         println "************************************************************"
         println "                                                          "
-        println "                 Importador Traslados ${new Date()}  "
+        println "                 Exportador De  Compras ${new Date()}  "
         println "                                                          "
         println "************************************************************"
 
 
       try {
-          println  "Se inicio el importador de Traslados ${new Date()}"
-          importadorDeTraslados.importar()
-          println "Se importaron con exito lls traslados ${new Date()}"
+          println "Se inicio la exportacion de Compras ${new Date()} !!!"
+          exportadorDeCompras.exportar()
+          println "Se exportaron las Compras con exito ${new Date()}  !!!"
+        
       }catch (Exception e){
           e.printStackTrace()
       }

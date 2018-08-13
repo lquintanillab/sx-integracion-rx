@@ -29,7 +29,7 @@ class ImportadorDeCompras {
     }
 
     def importar(fecha){
-      //println ("Importando Compras del : ${fecha.format('dd/MM/yyyy')}" )
+     // println ("Importando Compras del : ${fecha.format('dd/MM/yyyy')}" )
 
       def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
 
@@ -78,7 +78,7 @@ class ImportadorDeCompras {
 
   def importarOp(sqlSuc,sqlCen,fecha,sucursal,queryOperaciones,queryOperacion,entity){
 
-    //println "***** Importando ${entity} *****"
+    // println "***** Importando ${entity} *****"
 
     def config=EntityConfiguration.findByName(entity)
 
@@ -100,7 +100,7 @@ class ImportadorDeCompras {
             def operacionCen=sqlCen.firstRow(queryOperacion,[operacionSuc.id])
 
             if(!operacionCen){
-                //println "La opoeracion no existe, importar:  "+operacionSuc.id
+              //  println "La opoeracion no existe, importar:  "+operacionSuc.id
                 try{
                     SimpleJdbcInsert insert= new SimpleJdbcInsert(dataSource).withTableName(config.tableName)
                     def res=insert.execute(operacionSuc)
@@ -108,7 +108,7 @@ class ImportadorDeCompras {
                     e.printStackTrace()
                 }
             }else{
-              //println "La operacion ya existe: "+operacionSuc.id
+             // println "La operacion ya existe: "+operacionSuc.id
             }
 
         }
@@ -116,7 +116,7 @@ class ImportadorDeCompras {
   }
 
   
-String queryCompras="Select * from compra where cerrada is not null and date(cerrada)=? and sucursal_id=?"
+String queryCompras="Select * from compra where cerrada is not null and date(cerrada)=? and sucursal_id=? and centralizada is false"
 
 String queryCompra="select * from compra where id=?"
 

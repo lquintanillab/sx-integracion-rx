@@ -106,7 +106,9 @@ class ImportadorDeCancelaciones{
             def cxcCen=sqlCen.firstRow(queryCxcCen,[cancelacion.uuid])
 
             if(cxcCen){
-          //    println "Actualizando cuenta_por_cobrar de "+cancelacion.uuid
+              println "Actualizando cuenta_por_cobrar de "+cancelacion.uuid
+              def cxcCenId=cxcCen.id
+              println "-/***************************************************/-"+cxcCen.id
               def cxcSuc=sqlSuc.firstRow(queryCxcSuc,[cxcCen.id])
               sqlCen.executeUpdate(cxcSuc, configCxc.updateSql)
 
@@ -114,13 +116,16 @@ class ImportadorDeCancelaciones{
               def queryAplicacion="select * from aplicacion_de_cobro where cuenta_por_cobrar_id=?"
               def queryCobro="select * from cobro where id=?"
 
-              def ventaCen=sqlCen.firstRow(queryVenta,[cxcCen.id])
+              def ventaCen=sqlCen.firstRow(queryVenta,[cxcCenId])
+
+                      println "-/***************************************************/-"+cxcCenId
+                       println "-/***************************************************/-"+ventaCen
 
               if(ventaCen){
-
-                def ventaSuc=sqlSuc.firstRow(queryVenta,[cxcCen.id])
+                  println "-/***************************************************/-"+ventaCen.id
+                def ventaSuc=sqlSuc.firstRow("Select * from venta where id=?",[ventaCen.id])
                 if(ventaSuc){
-                                    println "--"+ventaCen.id
+                                    println "-/***************************************************/-"+ventaCen.id
                 def configVenta=EntityConfiguration.findByName("Venta")
                 sqlCen.executeUpdate(ventaSuc,configVenta.updateSql)
 
@@ -129,7 +134,7 @@ class ImportadorDeCancelaciones{
                 def ventasDet= sqlCen.rows(queryventasDet,[ventaCen.id])
 
                 ventasDet.each{ventaDet ->
-
+                                       println "-/********************Ventas DEt*******************************/-"+ventaDet.id
                   def inventarioID=ventaDet.inventario_id
 
                   def queryDet="select * from venta_det where id=?"
@@ -138,7 +143,7 @@ class ImportadorDeCancelaciones{
                   def configDetSuc=EntityConfiguration.findByName("VentaDet")
                   sqlCen.executeUpdate(detSuc,configDetSuc.updateSql)
 
-                  def queryinventario="select * from inventario where id=?"
+                  def queryInventario="select * from inventario where id=?"
 
                   def inventario =sqlCen.firstRow(queryInventario,[inventarioID])
 
@@ -160,8 +165,8 @@ class ImportadorDeCancelaciones{
                   def cobro=sqlCen.firstRow(queryCobro,[cobroId])
                   if(cobro){
                     if(cobro.forma_de_pago == 'EFECTIVO' || cobro.forma_de_pago == 'TARJETA_CREDITO' || cobro.forma_de_pago == 'TARJETA_DEBITO' || cobro.forma_de_pago == 'CHEQUE' || cobro.forma_de_pago == 'PAGO_DIF' ){
-                      def aplicacionesCobro=sql.rows("select * from aplicacion_de_cobro where cobro_id=?",[cobro.id])
-                      if(aplicacion_de_cobro.size() == 0){
+                      def aplicacionesCobro=sqlCen.rows("select * from aplicacion_de_cobro where cobro_id=?",[cobro.id])
+                      if(aplicacionesCobro.size() == 0){
                         sqlCen.execute("delete from cobro where id=?",[cobro.id])
                       }
                     }

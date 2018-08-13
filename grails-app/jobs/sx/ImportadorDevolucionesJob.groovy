@@ -17,7 +17,9 @@ def importadorDeDevoluciones
       println "************************************************************"
 
       try{
-         // importadorDeDevoluciones.importar()
+        println "Se inicio el importador de Devoluciones de Venta ${new Date()}"
+          importadorDeDevoluciones.importar()
+         println "Se importaron las devoluciones de venta con exito ${new Date()} !!!"
       }catch(Exception e){
         e.printStackTrace()
       }

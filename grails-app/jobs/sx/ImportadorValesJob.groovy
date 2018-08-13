@@ -17,7 +17,9 @@ class ImportadorValesJob {
 
 
       try {
-         // importadorDeVales.importar()
+         println "Se inicio el importador de Vales ${new Date()}"
+          importadorDeVales.importar()
+          println "Se importaron los vales con exito ${new Date()}"
       }catch (Exception e){
           e.printStackTrace()
       }

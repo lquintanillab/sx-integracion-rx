@@ -57,7 +57,7 @@ class ImportadorDeDevoluciones{
 
       def fecha=fechaImpo.format('yyyy/MM/dd')
 
-  //    println "Importando Por Server Fecha   "+fecha+ "   "+server.server
+      println "Importando Por Server Fecha   "+fechaImpo+ "   "+server.server
       def dataSourceSuc=dataSourceLocatorService.dataSourceLocatorServer(server)
       def sqlSuc=new Sql(dataSourceSuc)
       def sqlCen=new Sql(dataSource)
@@ -67,7 +67,7 @@ class ImportadorDeDevoluciones{
 
       def queryDevSuc="select * from devolucion_de_venta where date(fecha)=?"
 
-      def devolucionesSuc=sqlSuc.rows(queryDevSuc,[fechaImpo])
+      def devolucionesSuc=sqlSuc.rows(queryDevSuc,[fecha])
 
       def queryDevCen="select * from devolucion_de_venta where id=?"
 

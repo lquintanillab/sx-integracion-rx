@@ -438,7 +438,8 @@ class ReplicaService {
                                     }
                                     break
                                 case 'DELETE':
-
+                                        sqlSuc.execute("DELETE FROM ${audit.table_name} WHERE ID=?",[audit.persisted_object_id])
+                                         sqlCen.execute("UPDATE AUDIT_LOG SET DATE_REPLICATED=NOW(),MESSAGE=? WHERE ID=? ", ["ELIMINADO: ", audit.id])
                                     break;
                                 default:
                                     break;

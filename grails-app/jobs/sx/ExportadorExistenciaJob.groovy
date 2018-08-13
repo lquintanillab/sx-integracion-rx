@@ -16,8 +16,9 @@ class ExportadorExistenciaJob {
         println "************************************************************"
 
         try{
+                println "Se inicio el importador de Existencias ${new Date()}"
               exportadorDeExistencia.exportar()
-              println "Existencias exportadas con exito !!!"
+              println "Existencias exportadas con exito ${new Date()} !!!"
         }catch(Exception e){
             e.printStackTrace()
         }
