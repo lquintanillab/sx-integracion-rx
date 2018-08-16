@@ -17,7 +17,9 @@ class ExportadorTrasladosJob {
 
 
         try{
+           println "Se inicio la exportacion de traslados ${new Date()}"
             exportadorDeTraslados.exportar()
+            println "Se exportaron los traslados  con exito ${new Date()} !!!"
         }catch(Exception e){
                 e.printStackTrace()
         }

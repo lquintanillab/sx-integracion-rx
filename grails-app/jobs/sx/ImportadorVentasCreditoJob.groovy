@@ -17,7 +17,11 @@ class ImportadorVentasCreditoJob {
       println "************************************************************"
 
       try{
+        println "Se inicio la importacion de ventas credito "
         importadorDeVentasCredito.importar()
+
+        println "Se importaron las ventas de credito con exito ${new Date()} !!!"
+
       }catch(Exception e){
         e.printStackTrace()
       }

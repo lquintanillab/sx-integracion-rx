@@ -15,8 +15,10 @@ class ImportadorDeCancelacionesJob {
       println "************************************************************"
 
       try{
+        println "Se inicio la importacion de cancelaciones"
         importadorDeCancelaciones.importar()
-      }catch(Exception e){
+        println "Se importaron con exito las cancelaciones ${new Date()} !!!"
+        }catch(Exception e){
         e.printStackTrace()
       }
     }

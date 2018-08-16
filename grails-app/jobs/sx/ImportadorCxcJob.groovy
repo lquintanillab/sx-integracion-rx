@@ -17,7 +17,10 @@ class ImportadorDeCxcJob {
       println "************************************************************"
 
       try{
+        println "Se incio la importacion de CxC operaciones Venta ${new Date()}"
         importadorDeCxc.importarOperacionesVenta()
+        println "Se importaron  con exito las operaciones cxc Ventas con exito ${new Date()} !!!"
+
       }catch(Exception e){
         e.printStackTrace()
       }

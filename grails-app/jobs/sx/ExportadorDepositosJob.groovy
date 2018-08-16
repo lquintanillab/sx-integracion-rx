@@ -16,7 +16,10 @@ class ExportadorDepositosJob {
         println "************************************************************"
     try {
           exportadorDeDepositos.exportar()
+        println "Se exportaron con exito los depositos ${new Date()}!!!"
+
     }catch (Exception e){
+            println "Hubo un error al expotar Depositos!!!"
           e.printStackTrace()
     }
     }

@@ -23,22 +23,22 @@ class ExportadorAndrade1Job {
         def sucursal = 'ANDRADE'
 
               try{
-                 exportadorDeClientesCredito.exportar(sucursal)
+                // exportadorDeClientesCredito.exportar(sucursal)
               }catch (Exception e){
                      e.printStackTrace()
              }
              try{
-                exportadorDeClientes.exportar(sucursal)
+               // exportadorDeClientes.exportar(sucursal)
              }catch (Exception e){
                     e.printStackTrace()
               }
               try{
-                 exportadorDeProductos.exportar(sucursal)
+                // exportadorDeProductos.exportar(sucursal)
               }catch (Exception e){
                      e.printStackTrace()
              }
              try{
-                exportadorDeExistencia.exportar(sucursal)
+               // exportadorDeExistencia.exportar(sucursal)
              }catch (Exception e){
                     e.printStackTrace()
             }

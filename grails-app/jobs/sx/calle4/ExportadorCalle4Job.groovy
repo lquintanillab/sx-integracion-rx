@@ -19,12 +19,12 @@ def exportadorDeVales
       def sucursal = 'CALLE 4'
 
       try{
-         exportadorDeVales.exportarSucursal(sucursal)
+        // exportadorDeVales.exportarSucursal(sucursal)
       }catch (Exception e){
              e.printStackTrace()
      }
      try{
-        exportadorDeTraslados.exportarSucursal(sucursal)
+       // exportadorDeTraslados.exportarSucursal(sucursal)
      }catch (Exception e){
             e.printStackTrace()
     }

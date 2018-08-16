@@ -4,7 +4,8 @@ class ImportadorInventariosJob {
 
   def importadorDeInventarios
     static triggers = {
-      cron name:   'impInv',   startDelay: 10000, cronExpression: '0 0 21 * * ?'
+      cron name:   'impInv',   startDelay: 10000, cronExpression: '0 40 * * * ?'
+      
     }
 
     def execute() {
@@ -16,7 +17,9 @@ class ImportadorInventariosJob {
       println "************************************************************"
 
       try{
+        println "Se incio el importador de  Inventarios ${new Date()}"
         importadorDeInventarios.importar()
+       println "Se importaron los inventarios con exito ${new Date()} !!!"
       }catch(Exception e){
         e.printStackTrace()
       }

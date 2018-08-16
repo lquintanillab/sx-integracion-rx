@@ -17,7 +17,9 @@ class ImportadorExistenciaJob {
 
     
     try{
+            println "Se inicio el importador de Existencia ${new Date()}"
             importadorDeExistencia.importar()
+             println "Existencias importadas con exito ${new Date()} !!!"
         }catch(Exception e){
             e.printStackTrace()
         }

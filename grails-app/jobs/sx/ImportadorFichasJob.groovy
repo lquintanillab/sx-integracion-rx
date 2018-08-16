@@ -17,7 +17,9 @@ class ImportadorFichasJob {
 
 
       try {
+          println "Se ha iniciado la importacion de fichas ${new Date()}"
           importadorDeFichas.importar()
+          println "Se importaron las fichas con exito ${new Date()} !!!"
       }catch (Exception e){
           e.printStackTrace()
       }

@@ -16,7 +16,9 @@ class ImportadorVentasJob {
       println "************************************************************"
 
       try{
+        println "Se inicio la importacion de Ventas "
         importadorDeVentas.importar()
+        println "Se importaron las ventas con exito ${new Date()} !!!"
       }catch(Exception e){
         e.printStackTrace()
       }

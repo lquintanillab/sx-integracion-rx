@@ -17,7 +17,9 @@ class ImportadorAplicacionesCONJob {
 
 
       try {
+        println "Se inicio el importador de aplicaciones Contado ${new Date()}"
           importadorDeAplicacionesCON.importar()
+        println "Se importaron las aplicaciones de contado con exito ${new Date()} !!!"
       }catch (Exception e){
           e.printStackTrace()
       }

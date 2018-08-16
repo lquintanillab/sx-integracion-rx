@@ -17,16 +17,12 @@ class AjusteReplicaJob {
 
       try {
           sincronizacionService.replicaClientesCredito()
+
+          println "Se ajusto la replica para enviar clientes credito ${new Date()}"
       }catch (Exception e){
           e.printStackTrace()
       }
 
-      try {
-
-         sincronizacionService.depuraReplicaOficinas()
-      }catch (Exception e){
-          e.printStackTrace()
-      }
 
     }
 }
