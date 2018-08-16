@@ -67,7 +67,7 @@ class DataAcces{
                         }
                     }else if(actualizar){
                     println "La operacion ya existe: "+operacionSuc.id
-                            sqlCen.executeUpdate(operacionSuc, config.updateSql)
+                            //sqlCen.executeUpdate(operacionSuc, config.updateSql)
                     }
 
                 }
@@ -75,6 +75,68 @@ class DataAcces{
                 
             
         }
+
+
+
+
+
+     def validarOp(ip, bd, user,password, fecha, sucName, queryOperaciones ,queryOperacion ,entity,actualizar,params ){
+
+        def dataSourceRemote=dataSourceResolve(ip, bd, user, password)
+
+        def sqlSuc=getSql(dataSourceRemote)
+
+        def sqlCen=getSql(dataSource)
+
+        def sucursal=getSucursal(sucName)
+
+        def config=getConfig(entity)
+
+        def faltantes= []
+
+            if(!params){
+                params=[]
+
+                if (fecha && sucursal){
+                    params=[fecha,sucursal.id]
+                }
+                if(!fecha && sucursal){
+                    params=[sucursal.id]
+                }
+                if(fecha && !sucursal){
+                    params=[fecha]
+                }
+            }
+
+                def operaciones=sqlSuc.rows(queryOperaciones,params)
+
+                operaciones.each{ operacionSuc ->
+
+                    def operacionCen=sqlCen.firstRow(queryOperacion,[operacionSuc.id])
+
+                    if(!operacionCen){
+
+                        //println "La operacion No existe importar: "+operacionSuc.id
+
+                        faltantes.add(operacionSuc)
+            
+                        try{
+                           
+                        }catch(Exception e){
+                            e.printStackTrace()
+                        }
+                    }else if(actualizar){
+                   // println "La operacion ya existe: "+operacionSuc.id
+                            
+                    }
+
+                }
+
+                
+                println "---*** Faltantes ${fecha} ***---   "+faltantes.size()
+            
+        }
+
 
     def depurarCentral(ip, bd, user,password, fecha, sucName, queryOperaciones ,queryOperacion , entity, actualizar, params){
         
