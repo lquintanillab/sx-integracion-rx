@@ -2,7 +2,11 @@ package sx
 
 class ImportadorDeCancelacionesJob {
 
+
+  
   def importadorDeCancelaciones
+  def cancelacionCobro
+
     static triggers = {
         cron name:   'impCanc',   startDelay: 10000, cronExpression: '0 30 * * * ?'
     }
@@ -31,3 +35,4 @@ class ImportadorDeCancelacionesJob {
       }
     }
 }
+  

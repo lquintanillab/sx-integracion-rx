@@ -40,7 +40,7 @@ class CancelacionCobro{
 
     def importarServerFecha(server,fechaImpo){
 
-       // println "Importando por server y fecha"+server.server
+       println "Importando por server y fecha"+server.server
 
 
         def fecha=fechaImpo.format('yyyy/MM/dd')
@@ -54,7 +54,7 @@ class CancelacionCobro{
         def sqlCen=new Sql(dataSource)
         def configCxc= EntityConfiguration.findByName("Cobro")
 
-        def cobros = sqlCen.rows(queryCobro,[sucursal.id,sucursal.id,sucursal.id,sucursal.id,sucursal.id])
+        def cobros = sqlCen.rows(queryCobro,[sucursal.id,fecha,sucursal.id,fecha])
 
         cobros.each{ cobro ->
             
@@ -106,7 +106,7 @@ class CancelacionCobro{
                 sqlCen.execute("Delete from cobro where id=?",[cobro.id])
 
             }else{
-                
+                println "El cobro ${cobroSuc.id} si esta en la sucursal "
             }
 
         }
@@ -116,19 +116,10 @@ class CancelacionCobro{
 
     def queryCobro="""
         SELECT c.* FROM cobro c left join aplicacion_de_cobro a on (a.cobro_id=c.id)
-        where c.forma_de_pago in('PAGO_DIF') and a.id is null and sucursal_id = ? and c.fecha = CURRENT_DATE
-        union
-        SELECT c.* FROM cobro c left join aplicacion_de_cobro a on (a.cobro_id=c.id)
-        where c.forma_de_pago in('EFECTIVO') and a.id is null and sucursal_id = ? and c.fecha = CURRENT_DATE
-        union
-        SELECT c.* FROM cobro c left join aplicacion_de_cobro a on (a.cobro_id=c.id)
-        where c.forma_de_pago in('TARJETA_CREDITO') and a.id is null and sucursal_id = ? and c.fecha = CURRENT_DATE
-        union
-        SELECT c.* FROM cobro c left join aplicacion_de_cobro a on (a.cobro_id=c.id)
-        where c.forma_de_pago in('TARJETA_DEBITO') and a.id is null and sucursal_id = ? and c.fecha = CURRENT_DATE
+        where c.forma_de_pago in('PAGO_DIF','EFECTIVO','TARJETA_CREDITO','TARJETA_DEBITO') and a.id is null and sucursal_id = ? and c.fecha = ?
         union
         SELECT c.* FROM cobro c left join aplicacion_de_cobro a on (a.cobro_id=c.id) join cobro_cheque o on (o.cobro_id=c.id)
-        where c.forma_de_pago in('CHEQUE') and a.id is null and sucursal_id = ? and c.fecha = CURRENT_DATE and o.cambio_por_efectivo is false
+        where c.forma_de_pago in('CHEQUE') and a.id is null and sucursal_id = ? and c.fecha = ? and o.cambio_por_efectivo is false
 """
 
 }
