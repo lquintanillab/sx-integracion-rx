@@ -86,7 +86,7 @@ class ImportadorDeCompras {
 
       if (entity=='compra' || entity == 'compraDet'){
        // println "Es una compra o  compraDet"
-          params=[fecha,sucursal.id]
+          params=[sucursal.id,fecha,fecha]
       }else{
         
           params=[fecha,sucursal.id]
@@ -108,7 +108,11 @@ class ImportadorDeCompras {
                     e.printStackTrace()
                 }
             }else{
-             // println "La operacion ya existe: "+operacionSuc.id
+              if( entity=='compra' && operacionCen.last_updated < operacionSuc.last_updated  ){
+                  println "Compra Actualizada "
+                   sqlCen.executeUpdate(operacionSuc, config.updateSql)
+              }
+                 
             }
 
         }
@@ -116,11 +120,11 @@ class ImportadorDeCompras {
   }
 
   
-String queryCompras="Select * from compra where cerrada is not null and date(cerrada)=? and sucursal_id=? and centralizada is false"
+String queryCompras="Select * from compra where cerrada is not null  and sucursal_id=? and centralizada is false and (date(cerrada)=? or date(last_updated)=?)"
 
 String queryCompra="select * from compra where id=?"
 
-String queryComprasDet="select * from compra_det where compra_id in (Select id from compra where cerrada is not null and date(cerrada)=? and sucursal_id=?)"
+String queryComprasDet="select * from compra_det where compra_id in (Select id from compra where cerrada is not null and sucursal_id=? and (date(cerrada)=? or date(last_updated)=?))"
 
 String queryCompraDet="select * from compra_det  where id=? "
 
