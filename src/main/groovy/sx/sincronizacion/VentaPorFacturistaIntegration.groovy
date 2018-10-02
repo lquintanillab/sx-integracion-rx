@@ -58,6 +58,7 @@ class VentaPorFacturistaIntegration {
         GROUP BY
         fecha,sucursal_id,create_user
     """
+ 
 
     String getCommand(Date fecha) {
         return SQL_COMMAND.replaceAll("%FECHA%", fecha.format('yyyy-MM-dd'))
@@ -79,7 +80,11 @@ class VentaPorFacturistaIntegration {
         servers.each(){server ->
          
            // println "***  Importando Ventas por Facturista: ${server.server} ******* ${server.url}****  "
-            actualizar(server,fecha)
+           ///
+           if(server.server != 'SOLIS' || server.server != 'VERTIZ 176' ){
+                 actualizar(server,fecha)
+           }
+               
         }
     }
 
