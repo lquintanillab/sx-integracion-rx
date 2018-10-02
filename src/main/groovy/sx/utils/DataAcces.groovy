@@ -20,176 +20,6 @@ class DataAcces{
     def dataSource
 
 
-     def importarOp(ip, bd, user,password, fecha, sucName, queryOperaciones ,queryOperacion ,entity,actualizar,params ){
-
-        def dataSourceRemote=dataSourceResolve(ip, bd, user, password)
-
-        def sqlSuc=getSql(dataSourceRemote)
-
-        def sqlCen=getSql(dataSource)
-
-        def sucursal=getSucursal(sucName)
-
-        def config=getConfig(entity)
-
-            if(!params){
-                params=[]
-
-                if (fecha && sucursal){
-                    params=[fecha,sucursal.id]
-                }
-                if(!fecha && sucursal){
-                    params=[sucursal.id]
-                }
-                if(fecha && !sucursal){
-                    params=[fecha]
-                }
-            }
-
-
-            
-
-                def operaciones=sqlSuc.rows(queryOperaciones,params)
-
-                operaciones.each{ operacionSuc ->
-
-                    def operacionCen=sqlCen.firstRow(queryOperacion,[operacionSuc.id])
-
-                    if(!operacionCen){
-
-                        println "La operacion No existe importar: "+operacionSuc.id
-            
-                        try{
-                            SimpleJdbcInsert insert= new SimpleJdbcInsert(dataSource).withTableName(config.tableName)
-                            def res=insert.execute(operacionSuc)
-                        }catch(Exception e){
-                            e.printStackTrace()
-                        }
-                    }else if(actualizar){
-                    println "La operacion ya existe: "+operacionSuc.id
-                            //sqlCen.executeUpdate(operacionSuc, config.updateSql)
-                    }
-
-                }
-
-                
-            
-        }
-
-
-
-
-
-     def validarOp(ip, bd, user,password, fecha, sucName, queryOperaciones ,queryOperacion ,entity,actualizar,params ){
-
-        def dataSourceRemote=dataSourceResolve(ip, bd, user, password)
-
-        def sqlSuc=getSql(dataSourceRemote)
-
-        def sqlCen=getSql(dataSource)
-
-        def sucursal=getSucursal(sucName)
-
-        def config=getConfig(entity)
-
-        def faltantes= []
-
-            if(!params){
-                params=[]
-
-                if (fecha && sucursal){
-                    params=[fecha,sucursal.id]
-                }
-                if(!fecha && sucursal){
-                    params=[sucursal.id]
-                }
-                if(fecha && !sucursal){
-                    params=[fecha]
-                }
-            }
-
-                def operaciones=sqlSuc.rows(queryOperaciones,params)
-
-                operaciones.each{ operacionSuc ->
-
-                    def operacionCen=sqlCen.firstRow(queryOperacion,[operacionSuc.id])
-
-                    if(!operacionCen){
-
-                        //println "La operacion No existe importar: "+operacionSuc.id
-
-                        faltantes.add(operacionSuc)
-            
-                        try{
-                           
-                        }catch(Exception e){
-                            e.printStackTrace()
-                        }
-                    }else if(actualizar){
-                   // println "La operacion ya existe: "+operacionSuc.id
-                            
-                    }
-
-                }
-
-                
-                println "---*** Faltantes ${fecha} ***---   "+faltantes.size()
-            
-        }
-
-
-    def depurarCentral(ip, bd, user,password, fecha, sucName, queryOperaciones ,queryOperacion , entity, actualizar, params){
-        
-        def dataSourceRemote=dataSourceResolve(ip, bd, user, password)
-
-        def sqlSuc=getSql(dataSourceRemote)
-
-        def sqlCen=getSql(dataSource)
-
-        def sucursal=getSucursal(sucName)
-
-        def config=getConfig(entity)
-
-            if(!params){
-                params=[]
-
-                if (fecha && sucursal){
-                    params=[fecha,sucursal.id]
-                }
-                if(!fecha && sucursal){
-                    params=[sucursal.id]
-                }
-                if(fecha && !sucursal){
-                    params=[fecha]
-                }
-            }
-
-                def operaciones=sqlCen.rows(queryOperaciones,params)
-
-                operaciones.each{ operacionCen ->
-
-                   // println "operacion Cen"+operacionCen.id
-
-
-                    def operacionSuc=sqlSuc.firstRow(queryOperacion,[operacionCen.id])
-
-                    if(!operacionSuc){
-
-                        println "La operacion No existe depurar: "+operacionCen.id
-            
-                        try{
-                          //  sqlCen.execute("DELETE FROM $config.tableName WHERE id = ?",[operacionCen.id]);
-                        }catch(Exception e){
-                            e.printStackTrace()
-                        }
-                    }else{
-                      //  println "si existe ..."
-                    }
-
-                }
-    }
-
-
 def dataSourceResolve(ip, bd, user, password){
 
     def urlJdbc='jdbc:mysql://'+ip+"/"+bd
@@ -230,6 +60,59 @@ def getConfig(entity){
     return config
 }
 
+
+def getOperaciones(sql,table,periodo,sucursal_id,queryCustom){
+    
+    def query = "select id from ${table}  "
+    
+    def params=[]
+    if(periodo && !sucursal_id){
+        params=[periodo.fechaInicial , periodo.fechaFinal ]
+        query = "select id from ${table} where date(date_created) between ? and ?  "
+    }
+    if(periodo && sucursal_id){
+        params=[periodo.fechaInicial , periodo.fechaFinal, sucursal_id ]
+        query = "select id from ${table} where date(date_created) between ? and ?  and sucursal_id = ? "
+    }
+    if(!periodo && sucursal_id){
+        params=[sucursal_id ]
+        query = "select id  from ${table} where sucursal_id = ? "
+    }
+    
+    if(queryCustom){
+        query= queryCustom   
+    }
+    
+    def operaciones = sql.rows(query,params)
+    
+    return operaciones
+    
+}
+
+def getOperacionId(sql,table,id){
+    def query = "select * from ${table}  where id = ? "
+    def operacion = sql.firstRow(query,[id])
+    return operacion
+}
+
+def getDiferencias(operacionesPrin,operacionesSec){
+    
+    def diferencias=operacionesPrin.minus(operacionesSec)
+    return diferencias
+}
+
+def importarOperacion(dataSource,table,operacion){
+    
+    SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSource).withTableName(table)
+    def res=insert.execute(operacion)
+    
+}
+
+def actualizarOperacion(sql,config,operacion){
+    
+    int updated=sql.executeUpdate(operacion, config.updateSql)
+    
+}
 
 
 
