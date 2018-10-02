@@ -9,7 +9,7 @@ class SincronizacionService {
 
     def dataSourceLocatorService
 
-    def replicaClientesCredito(){
+    def replicaClientesCredito1(){
         def clientes=AuditLog.findAllByNameAndTargetAndDateReplicated('ClienteCredito','Central',null)
 
         clientes.each{cl->
@@ -19,7 +19,41 @@ class SincronizacionService {
             def sucursales=Sucursal.findAllByActiva(true)
 
             sucursales.each{ sucursal ->
-    //            println sucursal.nombre
+    //           println sucursal.nombre
+
+                AuditLog audit=new AuditLog()
+
+                audit.dateCreated=new Date()
+                audit.lastUpdated=new Date()
+                audit.name=cl.name
+                audit.tableName=cl.tableName
+                audit.source='CENTRAL'
+                audit.target=sucursal.nombre
+                audit.persistedObjectId=cl.persistedObjectId
+                audit.eventName=cl.eventName
+                audit.save(failOnerror:true , flush:true)
+            }
+
+            cl.dateReplicated=new Date()
+            cl.save(failOnerror:true , flush:true)
+
+        }
+
+    }
+
+
+    
+    def replicaClientesCredito(){
+        def clientes=AuditLog.where{target == 'CENTRAL' && dateReplicated == null && (name == 'Cliente' || name == 'ClienteCredito')}.findAll()
+
+        clientes.each{cl->
+
+        //    println "Cliente   "+cl.persistedObjectId
+
+            def sucursales=Sucursal.findAllByActiva(true)
+
+            sucursales.each{ sucursal ->
+            println sucursal.nombre
 
                 AuditLog audit=new AuditLog()
 

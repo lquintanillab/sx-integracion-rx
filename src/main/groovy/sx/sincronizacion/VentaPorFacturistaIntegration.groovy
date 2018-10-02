@@ -39,7 +39,7 @@ class VentaPorFacturistaIntegration {
         ,SUM(case when v.tipo = 'CON' and v.atencion like 'TEL%' then 1 else 0 end) as pedTelCON
         ,SUM(case when v.tipo = 'CON' and v.cod is true and v.atencion like 'TEL%' then 1 else 0 end) as pedTelCOD
         ,SUM(case when v.tipo = 'CRE' and v.atencion like 'TEL%' then 1 else 0 end) as pedTelCRE
-         FROM VENTA V WHERE FECHA='%FECHA%'
+         FROM VENTA V WHERE FECHA='%FECHA%' and sucursal_id not in ('402880fc5e4ec411015e4ec6512a0136','402880fc5e4ec411015e4ec652710139')
          GROUP BY fecha,sucursal_id,create_user
         union
         SELECT 'FAC' as tipo,fecha,sucursal_id,(SELECT s.nombre FROM sucursal s WHERE v.sucursal_id=s.id) as sucursalNom,update_user
@@ -52,7 +52,7 @@ class VentaPorFacturistaIntegration {
         ,count(*) as facs,sum(subtotal * tipo_de_cambio) as importe
         ,(SELECT count(*) FROM venta_det d join venta x on(d.venta_id=x.id) join cuenta_por_cobrar z on(x.cuenta_por_cobrar_id=z.id) where z.cfdi_id is not null and z.cancelada is null and x.update_user = v.update_user and date(z.fecha)='%FECHA%') as partidas
         ,0 as ped_fact,0 ped,0 pedMosCON,0 pedMosCOD,0 pedMosCRE,0 pedTelCON,0 pedTelCOD,0 pedTelCRE
-        FROM cuenta_por_cobrar V WHERE cfdi_id is not null and sw2 is null and FECHA='%FECHA%'
+        FROM cuenta_por_cobrar V WHERE cfdi_id is not null and sw2 is null and FECHA='%FECHA%' and sucursal_id not in ('402880fc5e4ec411015e4ec6512a0136','402880fc5e4ec411015e4ec652710139')
         GROUP BY fecha,sucursal_id,update_user
         ) AS A
         GROUP BY
