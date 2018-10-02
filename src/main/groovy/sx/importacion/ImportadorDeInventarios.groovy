@@ -40,7 +40,7 @@ class ImportadorDeInventarios{
         importarServerFecha(server,fecha)
       }
   }
-
+ 
 
   def importarSucursalFecha(nombreSuc,fecha){
 
@@ -105,7 +105,8 @@ class ImportadorDeInventarios{
             break
           }
     
-          def queryPartida="select * from ${table}_det where inventario_id=?"
+            def tableDet=table+'_det'
+            def queryPartida="select * from ${tableDet} where inventario_id=?"
 
           def partidaSuc=sqlSuc.firstRow(queryPartida,[inventarioSuc.id])
 
@@ -127,7 +128,7 @@ class ImportadorDeInventarios{
                 def moviCen=sqlCen.firstRow(queryMov,[movId.id])
                 try{
                     if(!moviCen){
-                
+                       // println "El movimiento no esta se va a importar"
                       SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSource).withTableName(table)
                       def res=insert.execute(moviSuc)
                     }else{
@@ -140,12 +141,15 @@ class ImportadorDeInventarios{
 
               }
             }
-            def partidaCen=sqlCen.firstRow(queryPartida,[partidaSuc.id])
-            def tableDet=table+'_det'
+
+            def queryPartidaCen="select * from ${tableDet} where id=?"
+            def partidaCen=sqlCen.firstRow(queryPartidaCen,[partidaSuc.id])
+            
+           // println queryPartida+"  -------------- "+tableDet+" --------- "+partidaSuc.partidas_idx+"  ------ "+partidaSuc.id+" ------- "+partidaCen
+            
             try{
                 if(!partidaCen){
          
-
                 SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSource).withTableName(tableDet)
                 def res=insert.execute(partidaSuc)
                 }else{

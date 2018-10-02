@@ -169,16 +169,9 @@ class ImportadorDeCancelaciones{
                       if(aplicacionesCobro.size() == 0){
                         sqlCen.execute("delete from cobro where id=?",[cobro.id])
                       }
-                    }
-                      
+                    }    
                   }
-                  
-
               }
-
-
-
-
           }
 
 
