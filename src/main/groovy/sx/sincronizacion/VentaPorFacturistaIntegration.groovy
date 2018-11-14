@@ -81,7 +81,7 @@ class VentaPorFacturistaIntegration {
          
            // println "***  Importando Ventas por Facturista: ${server.server} ******* ${server.url}****  "
            ///
-           if(server.server != 'SOLIS' || server.server != 'VERTIZ 176' ){
+           if(server.server != 'SOLIS' && server.server != 'VERTIZ 176' ){
                  actualizar(server,fecha)
            }
                

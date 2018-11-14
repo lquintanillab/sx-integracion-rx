@@ -44,7 +44,7 @@ class SincronizacionService {
 
     
     def replicaClientesCredito(){
-        def clientes=AuditLog.where{target == 'CENTRAL' && dateReplicated == null && (name == 'Cliente' || name == 'ClienteCredito')}.findAll()
+        def clientes=AuditLog.where{target == 'CENTRAL' && dateReplicated == null && (name == 'ClienteCredito')}.findAll()
 
         clientes.each{cl->
 

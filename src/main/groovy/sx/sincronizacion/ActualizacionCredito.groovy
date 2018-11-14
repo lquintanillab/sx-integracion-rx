@@ -73,7 +73,7 @@ def actualizarSaldo(){
 
           def saldoReal=totalCxc+totalMoratorios-totalNotas
 
-      if(saldoReal!=0)
+      //if(saldoReal!=0)
          // println cliente.nombre+"|"+saldoReal
 
       if(saldoReal<0)
@@ -82,8 +82,10 @@ def actualizarSaldo(){
       clienteCre.saldo=saldoReal
 
       //println cliente.nombre+"   "+saldoReal
-/*
+
       clienteCre.save(failOnError: true, flush:true)
+
+      /*
 
       def audit=new AuditLog()
 
