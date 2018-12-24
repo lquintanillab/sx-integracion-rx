@@ -50,7 +50,7 @@ class ExportadorDeCompras{
           def audits=sqlCen.rows(queryAudits,[server.server])
 
           audits.each{ audit ->
-               // println audit.id+"--"+audit.persisted_object_id
+                println audit.id+"--"+audit.persisted_object_id
 
                 def config= EntityConfiguration.findByName(audit.name)
 
@@ -59,23 +59,23 @@ class ExportadorDeCompras{
                 def opSuc=sqlSuc.firstRow(queryEntity,[audit.persisted_object_id])
                 def opCen=sqlCen.firstRow(queryEntity,[audit.persisted_object_id])
 
-                   // println opSuc
-                   // println opCen
+                    println opSuc
+                    println opCen
                 if(!opSuc){
                     SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSourceSuc).withTableName(config.tableName)
                     def res=insert.execute(opCen)
                      if(res){
-                      //  println '*************** Registros Exportados: '+res
+                        println '*************** Registros Exportados: '+res
                             sqlCen.execute("UPDATE AUDIT_LOG SET DATE_REPLICATED=NOW(),MESSAGE=? WHERE ID=? ", ["IMPORTADO",audit.id])
                     }else{
-                       //     println '***************  No se encontraron registros para insertar'
+                            println '***************  No se encontraron registros para insertar'
                             sqlCen.execute("UPDATE AUDIT_LOG SET DATE_REPLICATED=NOW(),MESSAGE=? WHERE ID=? ", ["REVISAR",audit.id])
                     }
 
                 }else{
                      int updated=sqlSuc.executeUpdate(opCen, config.updateSql)
                       if(updated){
-                       // println "Se actualizo el registro se va a crear auditLog"
+                        println "Se actualizo el registro se va a crear auditLog"
                             sqlCen.execute("UPDATE AUDIT_LOG SET DATE_REPLICATED=NOW(),MESSAGE=? WHERE ID=? ", ["ACTUALIZADO: ",audit.id])
                         }else{
                             sqlCen.execute("UPDATE AUDIT_LOG SET DATE_REPLICATED=NOW(),MESSAGE=? WHERE ID=? ", ["REVISAR ",audit.id])

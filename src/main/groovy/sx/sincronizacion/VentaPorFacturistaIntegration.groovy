@@ -81,7 +81,7 @@ class VentaPorFacturistaIntegration {
          
            // println "***  Importando Ventas por Facturista: ${server.server} ******* ${server.url}****  "
            ///
-           if(server.server != 'SOLIS' || server.server != 'VERTIZ 176' ){
+           if(server.server != 'SOLIS' && server.server != 'VERTIZ 176' ){
                  actualizar(server,fecha)
            }
                
@@ -94,7 +94,7 @@ class VentaPorFacturistaIntegration {
         def sqlCen=new Sql(dataSource)
         def sucursal = Sucursal.findByNombre(server.server)
 
-        try {
+       // try {
             println "*********  Importando Ventas por Facturista: ${server.server} ******* ${server.url}****  "
             def ventas = sqlSuc.rows(getCommand(fecha))
             ventas.each { row ->
@@ -104,10 +104,10 @@ class VentaPorFacturistaIntegration {
                 vta.sucursal = sucursal
                 vta.save failOnError: true, flush: true
            }
-        }catch (Exception e){
+       /* }catch (Exception e){
             def message = ExceptionUtils.getRootCauseMessage(e)
             
-        }
+        }*/
     }
 
 

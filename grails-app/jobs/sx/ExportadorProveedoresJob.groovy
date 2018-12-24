@@ -17,10 +17,7 @@ class ExportadorProveedoresJob {
 
 
         try{
-            println "Exportando Proveedores ${new Date()}"
-            exportadorDeProveedores.exportar()
-            println "Se exportaron los proveedores con exito ${new Date()} !!!"
-            
+          //  exportadorDeProveedores.exportar()
         }catch(Exception e){
                 e.printStackTrace()
         }

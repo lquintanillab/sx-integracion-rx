@@ -56,7 +56,7 @@ class ImportadorDeCompras {
   def importarServerFecha(server,fechaImpo){
 
         def fecha=fechaImpo.format('yyyy/MM/dd')
-       // println "Importando Por Server"+ server.server+" Fecha"+fecha
+        println "Importando Por Server"+ server.server+" Fecha"+fecha
           def dataSourceSuc=dataSourceLocatorService.dataSourceLocatorServer(server)
           def sqlSuc=new Sql(dataSourceSuc)
           def sqlCen=new Sql(dataSource)
@@ -78,7 +78,7 @@ class ImportadorDeCompras {
 
   def importarOp(sqlSuc,sqlCen,fecha,sucursal,queryOperaciones,queryOperacion,entity){
 
-    // println "***** Importando ${entity} *****"
+     println "***** Importando ${entity} *****"
 
     def config=EntityConfiguration.findByName(entity)
 
@@ -97,16 +97,18 @@ class ImportadorDeCompras {
 
         operaciones.each{ operacionSuc ->
 
+            println "*********************------------- *********************************************************"+operacionSuc.id
+
             def operacionCen=sqlCen.firstRow(queryOperacion,[operacionSuc.id])
 
             if(!operacionCen){
-              //  println "La opoeracion no existe, importar:  "+operacionSuc.id
-                try{
+                println "La opoeracion no existe, importar:  "+operacionSuc.id
+               // try{
                     SimpleJdbcInsert insert= new SimpleJdbcInsert(dataSource).withTableName(config.tableName)
                     def res=insert.execute(operacionSuc)
-                }catch(Exception e){
+             /*   }catch(Exception e){
                     e.printStackTrace()
-                }
+                }*/
             }else{
               if( entity=='compra' && operacionCen.last_updated < operacionSuc.last_updated  ){
                   println "Compra Actualizada "

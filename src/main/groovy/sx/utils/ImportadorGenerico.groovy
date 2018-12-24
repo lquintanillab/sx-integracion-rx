@@ -7,7 +7,7 @@ import sx.utils.Periodo
 
 
 
-class ImportadorGenerico(){
+class ImportadorGenerico{
 
 
 

@@ -68,11 +68,12 @@ def getOperaciones(sql,table,periodo,sucursal_id,queryCustom){
     def params=[]
     if(periodo && !sucursal_id){
         params=[periodo.fechaInicial , periodo.fechaFinal ]
-        query = "select id from ${table} where date(date_created) between ? and ?  "
+        query = "select id from ${table} where date(fecha) between ? and ?  "
     }
     if(periodo && sucursal_id){
         params=[periodo.fechaInicial , periodo.fechaFinal, sucursal_id ]
-        query = "select id from ${table} where date(date_created) between ? and ?  and sucursal_id = ? "
+        //query = "select id from ${table} where date(fecha) between ? and ?  and sucursal_id = ? "
+        query = "select id from ${table} where date(fecha) between ? and ?  and sucursal_id = ? "
     }
     if(!periodo && sucursal_id){
         params=[sucursal_id ]

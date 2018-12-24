@@ -156,7 +156,7 @@ class ReplicaService {
 
 
 
-             //   println "***  Importando de Por ReplicaService: ${server.server} ******* ${server.url}****  "
+                println "***  Importando de Por ReplicaService: ${server.server} ******* ${server.url}****  "
 
             def datasourceOrigen=dataSourceLocatorService.dataSourceLocator(server.server)
 
@@ -168,7 +168,7 @@ class ReplicaService {
 
                 def config= EntityConfiguration.findByName(audit.name)
 
-          //     println "Importando       " +audit.name+"  ---------  "+audit.persisted_object_id+"   "+config
+               println "Importando       " +audit.name+"  ---------  "+audit.persisted_object_id+"   "+config
 
                 if(config){
 
