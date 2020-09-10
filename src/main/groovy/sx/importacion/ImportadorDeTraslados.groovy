@@ -31,7 +31,7 @@ class ImportadorDeTraslados{
 
   //  println ("Importando Traslados" )
 
-    def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
+    def servers=DataSourceReplica.findAllByActivaAndCentralAndSucursal(true,false,true)
 
       def central=DataSourceReplica.findAllByActivaAndCentral(true,true)
 

@@ -21,6 +21,8 @@ class DataSourceReplica {
 
     Boolean activa = true
 
+    Boolean sucursal = false
+
 
 
     static constraints = {

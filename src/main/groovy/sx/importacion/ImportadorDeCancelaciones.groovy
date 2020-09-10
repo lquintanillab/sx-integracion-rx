@@ -31,7 +31,7 @@ class ImportadorDeCancelaciones{
   def importar(fecha){
     println ("Importando Cancelaciones del : ${fecha.format('dd/MM/yyyy')}" )
 
-    def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
+    def servers=DataSourceReplica.findAllByActivaAndCentralAndSucursal(true,false,true)
 
       def central=DataSourceReplica.findAllByActivaAndCentral(true,true)
 
@@ -64,7 +64,7 @@ class ImportadorDeCancelaciones{
     def sqlCen=new Sql(dataSource)
     def configCxc= EntityConfiguration.findByName("CuentaPorCobrar")
 
-    def queryCancelacionSuc="select * from cfdi_cancelado where date(date_created)=?"
+    def queryCancelacionSuc="select * from cuenta_por_cobrar where cancelada=?"
     //def queryCancelacionSuc="select * from cfdi_cancelado where date(date_created)='2018/04/10'"
 
     def cancelacionesSuc=sqlSuc.rows(queryCancelacionSuc,[fecha])
@@ -72,13 +72,13 @@ class ImportadorDeCancelaciones{
 
     cancelacionesSuc.each{cancelacion ->
         println "-Cancelacionoooooooooo- "+cancelacion.id
-          def queryCancelacionCen="select * from cfdi_cancelado where id=? "
+          def queryCancelacionCen="select * from cuenta_por_cobrar where id=? "
 
           def cancelacionCen=sqlCen.firstRow(queryCancelacionCen,[cancelacion.id])
 
            def configCfdi= EntityConfiguration.findByName("Cfdi")
 
-           def cfdiCen=sqlCen.firstRow("select * from cfdi where uuid=?",[cancelacion.uuid])
+           def cfdiCen=sqlCen.firstRow("select * from cfdi where id=?",[cancelacion.cfdi_id])
 
           
           if(cfdiCen){
@@ -90,15 +90,15 @@ class ImportadorDeCancelaciones{
                   sqlCen.executeUpdate(cfdiSuc, configCfdi.updateSql)
 
           }
-
-          if(!cancelacionCen){
+/*
+          if(!cfdiCen){
 
             println "Importando Cancelacion de Cfdi"+cancelacion.uuid
             SimpleJdbcInsert insert=new SimpleJdbcInsert(dataSource).withTableName("cfdi_cancelado")
             def res=insert.execute(cancelacion)
 
             }
-
+*/
             def queryCxcCen="Select * from cuenta_por_cobrar where uuid=?"
 
             def queryCxcSuc="select * from cuenta_por_cobrar where id=?"

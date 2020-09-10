@@ -35,7 +35,7 @@ class ImportadorDeCxc{
 
      def fecha=fecha1.format('yyyy/MM/dd')
     //  println "Importando operaciones de venta  "+fecha
-      def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
+     def servers=DataSourceReplica.findAllByActivaAndCentralAndSucursal(true,false,true)
 
       //def servers=DataSourceReplica.findAllByServer('TACUBA')
 
@@ -287,7 +287,7 @@ class ImportadorDeCxc{
           sql.rows(query,[fecha]).each { audit ->
 
             //  println "***  Importando desde: ${server.server} *****************************************************************  CFDI   ${audit.id} "+fecha
-          //    println "***  Importando desde: ${server.server} *****************************************************************  CFDI   ${audit.id} "+fecha
+            //    println "***  Importando desde: ${server.server} *****************************************************************  CFDI   ${audit.id} "+fecha
             //  println "***  Importando desde: ${server.server} *****************************************************************  CFDI   ${audit.id} "+fecha
 
               def queryCfdi= "select * from cfdi where origen='VENTA' and id=?"

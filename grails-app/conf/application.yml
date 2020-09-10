@@ -98,7 +98,7 @@ environments:
     development:
        dataSource:
          dbCreate: none
-         url: jdbc:mysql://10.10.1.229:3306/siipapx?autoReconnect=true
+         url: jdbc:mysql://10.10.1.229:3306/siipapx?autoReconnect=true&useSSL=false
          password: sys
          properties:
            maxActive: 20
@@ -141,7 +141,7 @@ environments:
              validationInterval: 15000
 ---
 quartz:
-    autoStartup: false
+    autoStartup: true
 ---
 server:
   port: 9080

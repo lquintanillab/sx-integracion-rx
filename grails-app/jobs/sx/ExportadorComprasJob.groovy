@@ -18,7 +18,7 @@ class ExportadorComprasJob {
 
       try {
           println "Se inicio la exportacion de Compras ${new Date()} !!!"
-          exportadorDeCompras.exportar()
+         // exportadorDeCompras.exportar()
           println "Se exportaron las Compras con exito ${new Date()}  !!!"
         
       }catch (Exception e){

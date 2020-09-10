@@ -31,7 +31,7 @@ class ImportadorDeVales{
 
   //  println ("Importando Vales" )
 
-    def servers=DataSourceReplica.findAllByActivaAndCentral(true,false)
+    def servers=DataSourceReplica.findAllByActivaAndCentralAndSucursal(true,false,true)
 
       def central=DataSourceReplica.findAllByActivaAndCentral(true,true)
 

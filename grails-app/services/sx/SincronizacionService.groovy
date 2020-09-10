@@ -10,7 +10,7 @@ class SincronizacionService {
     def dataSourceLocatorService
 
     def replicaClientesCredito1(){
-        def clientes=AuditLog.findAllByNameAndTargetAndDateReplicated('ClienteCredito','Central',null)
+        def clientes=AuditLog.findAllByNameAndTargetAndDateReplicated('ClienteCredito','CENTRAL',null)
 
         clientes.each{cl->
 
