@@ -22,7 +22,14 @@ class AjusteReplicaJob {
       }catch (Exception e){
           e.printStackTrace()
       }
+      
+      try {
+          sincronizacionService.replicaClientes()
 
+          println "Se ajusto la replica para enviar clientes  ${new Date()}"
+      }catch (Exception e){
+          e.printStackTrace()
+      }
 
     }
 }

@@ -125,8 +125,8 @@ environments:
            url: jdbc:mysql://10.10.1.229/siipapx?autoReconnect=false
            password: sys
            properties:
-             maxActive: 20
-             maxIdle: 20
+             maxActive: 5
+             maxIdle: 5
              minIdle: 2
              initialSize: 1
              minEvictableIdleTimeMillis: 1800000

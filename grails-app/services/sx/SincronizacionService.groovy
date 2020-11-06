@@ -75,6 +75,39 @@ class SincronizacionService {
 
     }
 
+
+        def replicaClientes(){
+        def clientes=AuditLog.where{target == 'CENTRAL' && dateReplicated == null && (name == 'Cliente')}.findAll()
+
+        clientes.each{cl->
+
+        //    println "Cliente   "+cl.persistedObjectId
+
+            def sucursales=Sucursal.findAllByActiva(true)
+
+            sucursales.each{ sucursal ->
+            println sucursal.nombre
+
+                AuditLog audit=new AuditLog()
+
+                audit.dateCreated=new Date()
+                audit.lastUpdated=new Date()
+                audit.name=cl.name
+                audit.tableName=cl.tableName
+                audit.source='CENTRAL'
+                audit.target=sucursal.nombre
+                audit.persistedObjectId=cl.persistedObjectId
+                audit.eventName=cl.eventName
+                audit.save(failOnerror:true , flush:true)
+            }
+
+            cl.dateReplicated=new Date()
+            cl.save(failOnerror:true , flush:true)
+
+        }
+
+    }
+
     def depuraReplicaOficinas(){
 
         def audits= AuditLog.where{target == 'OFICINAS' && dateReplicated == null && (name != 'ClienteCredito' )}
